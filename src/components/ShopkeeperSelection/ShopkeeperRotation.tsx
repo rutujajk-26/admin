@@ -241,7 +241,7 @@ const ShopkeeperRotation: React.FC<ShopkeeperRotationProps> = ({ shopkeepers, on
                     </p>
                     <p className="text-xs text-gray-500">
                       Assigned to {pendingRequests[i % pendingRequests.length]?.instituteName || 'Institute'} 
-                      {' - '}${pendingRequests[i % pendingRequests.length]?.totalCost || '1000'}
+                      {' - '}₹{pendingRequests[i % pendingRequests.length]?.totalCost || '1000'}
                     </p>
                     <p className="text-xs text-gray-400 mt-1">
                       {new Date(Date.now() - i * 2 * 24 * 60 * 60 * 1000).toLocaleDateString()}

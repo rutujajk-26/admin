@@ -153,7 +153,7 @@ const RequestTable: React.FC<RequestTableProps> = ({
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">${calculateTotalCost(request)}</div>
+                  <div className="text-sm text-gray-900">₹{calculateTotalCost(request)}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-500">

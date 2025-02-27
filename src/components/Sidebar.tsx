@@ -46,10 +46,10 @@ const Sidebar: React.FC = () => {
 
       {/* Sidebar */}
       <div className={`
-        fixed lg:static inset-y-0 left-0 z-40
+        fixed lg:sticky top-0 inset-y-0 left-0 z-40
         transform ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
         transition-transform duration-200 ease-in-out
-        bg-gray-800 text-white w-64 min-h-screen flex flex-col
+        bg-gray-800 text-white w-64 h-screen overflow-y-auto
       `}>
         <div className="p-5 border-b border-gray-700">
           <h2 className="text-2xl font-bold">Admin Panel</h2>

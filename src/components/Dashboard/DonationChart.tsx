@@ -25,7 +25,8 @@ const DonationChart: React.FC<DonationChartProps> = ({ data }) => {
             <XAxis dataKey="month" />
             <YAxis />
             <Tooltip 
-              formatter={(value) => [`$${value}`, 'Amount']}
+              cursor={false}
+              formatter={(value) => [`₹${value}`, 'Amount']}
               labelFormatter={(label) => `Month: ${label}`}
             />
             <Bar dataKey="amount" fill="#4F46E5" radius={[4, 4, 0, 0]} />
