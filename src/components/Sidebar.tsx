@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
 import { 
   LayoutDashboard, 
   Users, 
@@ -12,19 +11,26 @@ import {
   Menu,
   X
 } from 'lucide-react';
+import { useNavigation } from '../context/NavigationContext';
 
 const Sidebar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { currentPage, setCurrentPage } = useNavigation();
 
   const navItems = [
-    { path: '/admin', icon: <LayoutDashboard size={20} />, label: 'Dashboard' },
-    { path: '/admin/users', icon: <Users size={20} />, label: 'User Management' },
-    { path: '/admin/requests', icon: <ClipboardList size={20} />, label: 'Request Monitoring' },
-    { path: '/admin/shopkeepers', icon: <Store size={20} />, label: 'Shopkeeper Selection' },
-    { path: '/admin/transactions', icon: <CreditCard size={20} />, label: 'Transactions' },
-    { path: '/admin/feedback', icon: <MessageSquare size={20} />, label: 'Feedback' },
-    { path: '/admin/reports', icon: <BarChart4 size={20} />, label: 'Reports' },
+    { id: 'dashboard', icon: <LayoutDashboard size={20} />, label: 'Dashboard' },
+    { id: 'users', icon: <Users size={20} />, label: 'User Management' },
+    { id: 'requests', icon: <ClipboardList size={20} />, label: 'Request Monitoring' },
+    { id: 'shopkeepers', icon: <Store size={20} />, label: 'Shopkeeper Selection' },
+    { id: 'transactions', icon: <CreditCard size={20} />, label: 'Transactions' },
+    { id: 'feedback', icon: <MessageSquare size={20} />, label: 'Feedback' },
+    { id: 'reports', icon: <BarChart4 size={20} />, label: 'Reports' },
   ];
+
+  const handleNavigation = (pageId: string) => {
+    setCurrentPage(pageId as any);
+    setIsOpen(false);
+  };
 
   return (
     <>
@@ -58,22 +64,18 @@ const Sidebar: React.FC = () => {
         <nav className="flex-1 pt-5 overflow-y-auto">
           <ul>
             {navItems.map((item) => (
-              <li key={item.path} className="mb-1">
-                <NavLink
-                  to={item.path}
-                  className={({ isActive }) =>
-                    `flex items-center px-5 py-3 ${
-                      isActive
-                        ? 'bg-gray-700 text-white'
-                        : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                    }`
-                  }
-                  end={item.path === '/admin'}
-                  onClick={() => setIsOpen(false)}
+              <li key={item.id} className="mb-1">
+                <button
+                  onClick={() => handleNavigation(item.id)}
+                  className={`flex items-center px-5 py-3 w-full ${
+                    currentPage === item.id
+                      ? 'bg-gray-700 text-white'
+                      : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                  }`}
                 >
                   <span className="mr-3">{item.icon}</span>
                   {item.label}
-                </NavLink>
+                </button>
               </li>
             ))}
           </ul>

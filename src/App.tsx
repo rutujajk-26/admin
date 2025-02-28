@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { NavigationProvider, useNavigation } from './context/NavigationContext';
 import DashboardPage from './pages/DashboardPage';
 import UserManagementPage from './pages/UserManagementPage';
 import RequestMonitoringPage from './pages/RequestMonitoringPage';
@@ -8,21 +8,38 @@ import TransactionsPage from './pages/TransactionsPage';
 import FeedbackPage from './pages/FeedbackPage';
 import ReportsPage from './pages/ReportsPage';
 
+const AppContent: React.FC = () => {
+  const { currentPage } = useNavigation();
+
+  const renderPage = () => {
+    switch (currentPage) {
+      case 'dashboard':
+        return <DashboardPage />;
+      case 'users':
+        return <UserManagementPage />;
+      case 'requests':
+        return <RequestMonitoringPage />;
+      case 'shopkeepers':
+        return <ShopkeeperSelectionPage />;
+      case 'transactions':
+        return <TransactionsPage />;
+      case 'feedback':
+        return <FeedbackPage />;
+      case 'reports':
+        return <ReportsPage />;
+      default:
+        return <DashboardPage />;
+    }
+  };
+
+  return renderPage();
+};
+
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Navigate to="/admin" replace />} />
-        <Route path="/admin" element={<DashboardPage />} />
-        <Route path="/admin/users" element={<UserManagementPage />} />
-        <Route path="/admin/requests" element={<RequestMonitoringPage />} />
-        <Route path="/admin/shopkeepers" element={<ShopkeeperSelectionPage />} />
-        <Route path="/admin/transactions" element={<TransactionsPage />} />
-        <Route path="/admin/feedback" element={<FeedbackPage />} />
-        <Route path="/admin/reports" element={<ReportsPage />} />
-        {/* Add routes for other admin pages */}
-      </Routes>
-    </Router>
+    <NavigationProvider>
+      <AppContent />
+    </NavigationProvider>
   );
 }
 

@@ -20,7 +20,7 @@ import DonationChart from '../components/Dashboard/DonationChart';
 import RecentRequests from '../components/Dashboard/RecentRequests';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigation } from '../context/NavigationContext';
 import UserDistributionChart from '../components/Dashboard/UserDistributionChart';
 import DonationsByTypeChart from '../components/Dashboard/DonationsByTypeChart';
 import RequestTrendChart from '../components/Dashboard/RequestTrendChart';
@@ -28,15 +28,15 @@ import RequestTrendChart from '../components/Dashboard/RequestTrendChart';
 type RequestCategory = 'all' | 'pending' | 'completed' | 'flagged';
 
 const DashboardPage: React.FC = () => {
-  const navigate = useNavigate();
+  const { setCurrentPage } = useNavigation();
   const [timeRange, setTimeRange] = useState('7');
   const [showGoalsModal, setShowGoalsModal] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<RequestCategory>('all');
 
   // Navigation handlers
-  const handleViewAllUsers = () => navigate('/admin/users');
-  const handleViewDonationDetails = () => navigate('/admin/transactions');
-  const handleViewAllActivity = () => navigate('/admin/activity');
+  const handleViewAllUsers = () => setCurrentPage('users');
+  const handleViewDonationDetails = () => setCurrentPage('transactions');
+  const handleViewAllActivity = () => setCurrentPage('requests');
 
   // Modal handlers
   const handleSetGoals = () => setShowGoalsModal(true);
@@ -234,7 +234,7 @@ const DashboardPage: React.FC = () => {
                       {selectedCategory === 'pending' ? 'Pending Request Trends' : 'Flagged Request Trends'}
                     </h3>
                     <button 
-                      onClick={() => navigate('/admin/requests')}
+                      onClick={() => setCurrentPage('requests')}
                       className={`${
                         selectedCategory === 'pending' ? 'text-amber-600 hover:text-amber-800' : 'text-rose-600 hover:text-rose-800'
                       } text-sm flex items-center transition-colors`}
@@ -265,7 +265,7 @@ const DashboardPage: React.FC = () => {
                   <span className="text-sm text-gray-500">({filteredRequests.length})</span>
                 </div>
                 <button 
-                  onClick={() => navigate('/admin/requests')}
+                  onClick={() => setCurrentPage('requests')}
                   className={`
                     inline-flex items-center px-4 py-2 rounded-md text-sm font-medium transition-colors
                     ${
